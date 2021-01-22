@@ -1,10 +1,11 @@
 class FoldersController < ApplicationController
     require 'fileutils'
-    before_action :set_folder, only: [:show, :destroy, :edit]
+    before_action :set_folder, only: [:show, :destroy, :edit, :update]
+    
     def index
         @folders = Folder.all
-        $global_path = "/"
-        $parent_id = 0
+        $global_path = "/" #Insialisai Directory
+        $parent_id = 0 #Inisialisasi Id parent saat ini
     end
 
     def new
@@ -12,10 +13,9 @@ class FoldersController < ApplicationController
     end
 
     def create
-        @param_name = folder_params[:name]
-        Dir.chdir(ENV['APP_FOLDER'] + "/work-folder" + $global_path)
-
-        if Dir.exist?(@param_name)
+        @param_name = folder_params[:name] 
+        Dir.chdir(ENV['APP_FOLDER'] + "/work-folder" + $global_path) # Pindah folder ke folder ini
+        if Dir.exist?(@param_name) #Jika file sudah ada maka ganti nama file
             @param_name = @param_name + "_copy"
         end
 
@@ -30,14 +30,23 @@ class FoldersController < ApplicationController
     end
 
     def edit
-        Dir.chdir(ENV['APP_FOLDER'] + "/work-folder" + $global_path)
+        
+    end
+
+    def update
+        Dir.chdir(ENV['APP_FOLDER'] + "/work-folder" + @folder.path)
+        File.rename @folder.name, folder_params[:name]
+        if @folder.update(folder_params)
+            redirect_to folders_path
+        else
+            render :edit
+        end
     end
     
     def show
         @folders = Folder.all
-        $global_path = @folder.path + @folder.name + "/"
-        $parent_id = @folder.id
-        
+        $global_path = @folder.path + @folder.name + "/" # Posisi Folder saat ini
+        $parent_id = @folder.id # Id parent di isi dengan id yang sedang di lihat
         @content_folders = (Dir.each_child(ENV['APP_FOLDER'] + "/work-folder" + $global_path))
     end
 

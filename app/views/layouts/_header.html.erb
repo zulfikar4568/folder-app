@@ -36,8 +36,7 @@
                   <%unless current_page?(folders_path) || current_page?(root_path)  || current_page?(new_folder_path)%>
                     <a class="nav-item ml-4"><%= link_to "Add Document", new_document_path %></a>
                     <%unless current_page?(new_document_path)%>
-                      <a class="nav-item ml-4"><%= link_to "Edit Folder", ""%></a>
-                      <a class="nav-item ml-4"><%= link_to "Move Folder", ""%></a>
+                      <a class="nav-item ml-4"><%= link_to "Edit Folder", edit_folder_path($parent_id)%></a>
                     <%end%>
                   <%end%>
                 </span>

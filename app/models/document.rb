@@ -22,6 +22,5 @@ class Document < ApplicationRecord
     f.close
 
     self.file = nil
-    # update file_filename: filename
   end
 end
