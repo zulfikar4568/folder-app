@@ -11,7 +11,7 @@ class DocumentsController < ApplicationController
 
     def download
         @document = Document.find($id_doc)
-        file_path = "#{ENV['APP_FOLDER']}/work-folder#{$global_path}"
+        file_path = "#{ENV['APP_FOLDER']}#{$global_path}"
         send_file(File.join(file_path, @document.name))
         # redirect_to document_path($id_doc)
     end
@@ -31,7 +31,7 @@ class DocumentsController < ApplicationController
 
     def destroy
         @document.destroy
-        Dir.chdir("#{ENV['APP_FOLDER']}/work-folder#{$global_path}")
+        Dir.chdir("#{ENV['APP_FOLDER']}#{$global_path}")
         FileUtils.rm_rf(@document.name)
         redirect_to folders_path
     end
@@ -47,7 +47,7 @@ class DocumentsController < ApplicationController
     end
 
     def update
-        Dir.chdir("#{ENV['APP_FOLDER']}/work-folder#{@document.folder.path}#{@document.folder.name}")
+        Dir.chdir("#{ENV['APP_FOLDER']}#{@document.folder.path}#{@document.folder.name}")
         File.rename @document.name, update_params[:name]
         if @document.update(update_params)
             redirect_to folders_path
