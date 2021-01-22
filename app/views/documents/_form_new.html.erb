@@ -1,0 +1,21 @@
+<%= form_for @document do |form|%>
+    <div class="row">
+        <div class="col-sm-6 card">    
+            <%# <div class="form-group"> %>
+                <%#= label_tag :name%>
+                <%#= form.text_field :name, {class: "form-control", autocomplete:"off"}%>
+            <%# </div> %>
+            <div class="form-group">
+                <%= label_tag :description%>
+                <%= form.text_field :description, {class: "form-control", autocomplete:"off"}%>
+            </div>
+
+            <div class="form-group">
+                <%= label_tag :file%>
+                <%= form.file_field :file, {class: "form-control-file"}%>
+            </div>
+
+            <%= form.submit "Add" ,class: "btn btn-primary mb-4"%>
+        </div>
+    </div>
+<%end%>

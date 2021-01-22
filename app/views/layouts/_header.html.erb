@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <%= link_to "DMS Synergy Engineering", root_path, class:"navbar-brand h1 ml-4"%>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-end" id="navbarText">
+    <span class="navbar-text">
+      <%= link_to "Sign In", "", class: "btn btn-outline-primary"%>
+      <%= link_to "Sign Up", "", class: "btn btn-outline-danger"%>
+    </span>
+  </div>
+</nav>
+
+<div class="">
+  <div class="row ml-3 mr-3">
+        <div class="col-sm-12 card-header mt-4 p-2">
+            <a class="card-text ml-4 text-bold"><%= link_to "FOLDERS", folders_path%></a>
+
+            <%unless current_page?(folders_path) || current_page?(root_path)%>
+              <%unless current_page?(new_document_path)%>
+                <a class="card-text ml-4"><%= link_to "Add Sub Folder", new_folder_path %></a>
+              <%end%>
+            <%else%>
+              <a class="card-text ml-4"><%= link_to "Add Folder", new_folder_path %></a>
+            <%end%>
+
+            <%unless $global_path == "/" || current_page?(new_folder_path) || current_page?(new_document_path)%>
+              <a class="card-text ml-4"><%= link_to "Remove Folder", folder_path($parent_id), method: :delete, data: { confirm: "Are you sure?" } %></a>
+            <%end%>
+
+            <%unless current_page?(folders_path) || current_page?(root_path)  || current_page?(new_folder_path)%>
+              <a class="card-text ml-4"><%= link_to "Add Document", new_document_path %></a>
+              <%unless current_page?(new_document_path)%>
+                <a class="card-text ml-4"><%= link_to "Edit Folder", ""%></a>
+                <a class="card-text ml-4"><%= link_to "Move Folder", ""%></a>
+              <%end%>
+            <%end%>
+
+        </div>
+  </div>
+</div>

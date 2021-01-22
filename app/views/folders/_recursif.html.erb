@@ -1,0 +1,15 @@
+<% @myArray = []%>
+<% def recursif(idr)%>
+    <% folderLoop = Folder.find(idr)%>
+    <% @myArray<<folderLoop.id%>
+    <% unless folderLoop.parent_id == 0%>
+        <% recursif(folderLoop.parent_id)%>
+    <%end%>
+<%end%>
+<%recursif(@folder.id)%>
+<% @myArray.reverse!%>
+
+<% @myArray.each do |id|%>
+    <% data= Folder.find(id)%>
+    <%= link_to data.name, data%> <a>/</a>
+<%end%>

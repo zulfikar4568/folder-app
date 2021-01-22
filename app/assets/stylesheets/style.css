@@ -1,0 +1,18 @@
+#iconku .btn{
+  background-color: DodgerBlue; /* Blue background */
+  border: none; /* Remove borders */
+  color: white; /* White text */
+  padding: 5px 8px; /* Some padding */
+  font-size: 15px; /* Set a font size */
+  cursor: pointer; /* Mouse pointer on hover */
+}
+
+#iconku .btn .fa{
+  color: white; /* White text */
+}
+
+/* Darker background on mouse-over */
+#iconku .btn:hover {
+  background-color:mediumblue;
+}
+  

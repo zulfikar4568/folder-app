@@ -1,0 +1,18 @@
+<div class="col-sm-4 card-header mt-4 p-2">
+    <div class="p-3 mt-4" style="overflow-x: auto; white-space: nowrap;">
+        <hr>
+        <% def find_out(idf_parent) %>
+            <%showmes = Folder.where(parent_id: idf_parent)%>
+            <ul>
+            <%showmes.each do |showme|%>
+                <%= image_tag "folder.png", style: "height:15px;, width:15px;"%><a style="list-style-type: none;"> <%= link_to showme.name, showme%></a>
+                <%unless showmes.length == 0%>
+                    <%find_out(showme.id)%>
+                <%end %>
+            <%end%>
+            </ul>
+        <%end%>
+        <%find_out(value)%>
+    </div>
+</div>
+

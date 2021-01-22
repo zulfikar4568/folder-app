@@ -1,0 +1,24 @@
+<%= form_for @folder do |form|%>
+    <div class="row">
+        <div class="col-sm-6 card">    
+            <div class="form-group">
+                <%= label_tag :name%>
+                <%= form.text_field :name, {class: "form-control", autocomplete:"off"}%>
+            </div>
+
+            <%# <div class="form-group"> %>
+                <%#= form.label :parent_id%>
+                <%#= form.collection_select(:parent_id, Folder.order(:name), :id, :name, {include_blank: true}, {class: "custom-select"}) %>
+                <%#= label_tag :path %>
+                <%#  listFolder = []
+                    Dir.chdir(ENV['APP_FOLDER'] + "/work-folder" + $global_path) do
+                       listFolder = Dir.glob('*')
+                        listFolder.insert(0, "")
+                    end %>
+                <%#= form.select :path, listFolder , {}, {class: "custom-select"} %>
+            <%# </div> %>
+
+            <%= form.submit "Add" ,class: "btn btn-primary mb-4"%>
+        </div>
+    </div>
+<%end%>
