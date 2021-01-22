@@ -52,13 +52,14 @@
                                     <div id="iconku" class="text-center">
                                         <% Dir.chdir(ENV['APP_FOLDER'] + "/work-folder" + $global_path) %>
                                         <% unless File.directory?(content_folder)%>
-                                            <button class="btn"><i class="fa fa-lock"></i></button>
-                                            <button class="btn"><%= link_to "", document_path(@ff.id), {method: :delete, data: { confirm: "Are you sure?"}, class: "fa fa-trash"}%></button>
+                                            <button class="btn mt-1"><i class="fa fa-lock"></i></button>
+                                            <button class="btn mt-1"><%= link_to "", document_path(@ff.id), {method: :delete, data: { confirm: "Are you sure?"}, class: "fa fa-trash"}%></button>
+                                            <button class="btn mt-1"><%= link_to "", edit_document_path(@ff.id), class: "fa fa-edit"%></button>       
                                         <%else%>
-                                            <button class="btn"><%= link_to "", folder_path(@ff.id), {method: :delete, data: { confirm: "Are you sure?"}, class: "fa fa-trash"}%></button>
+                                            <button class="btn mt-1"><%= link_to "", folder_path(@ff.id), {method: :delete, data: { confirm: "Are you sure?"}, class: "fa fa-trash"}%></button>
+                                            <button class="btn mt-1"><%= link_to "", edit_folder_path(@ff.id), class: "fa fa-edit"%></button>
+                                            <button class="btn mt-1"><%= link_to "", @ff, class: "fa fa-eye"%></button>
                                         <%end%>
-                                        <button class="btn"><i class="fa fa-edit"></i></button>
-                                        <button class="btn"><i class="fa fa-eye"></i></button>
                                     </div>
                                 </td>
                             </tr>

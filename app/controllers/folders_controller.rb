@@ -1,6 +1,6 @@
 class FoldersController < ApplicationController
     require 'fileutils'
-    before_action :set_folder, only: [:show, :destroy]
+    before_action :set_folder, only: [:show, :destroy, :edit]
     def index
         @folders = Folder.all
         $global_path = "/"
@@ -27,6 +27,10 @@ class FoldersController < ApplicationController
         else
             render :new
         end
+    end
+
+    def edit
+        Dir.chdir(ENV['APP_FOLDER'] + "/work-folder" + $global_path)
     end
     
     def show

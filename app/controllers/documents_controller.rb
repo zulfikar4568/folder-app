@@ -4,6 +4,7 @@ class DocumentsController < ApplicationController
     def index
         
     end
+    
     def new
         @document = Document.new
     end
