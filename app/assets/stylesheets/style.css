@@ -15,4 +15,21 @@
 #iconku .btn:hover {
   background-color:mediumblue;
 }
-  
+
+#status_button .btn{
+  background-color: rgb(184, 30, 255); /* Blue background */
+  border: none; /* Remove borders */
+  color: white; /* White text */
+  padding: 30px 50px; /* Some padding */
+  font-size: 75px; /* Set a font size */
+  cursor: pointer; /* Mouse pointer on hover */
+}
+
+#status_button .btn .fa{
+  color: white; /* White text */
+}
+
+/* Darker background on mouse-over */
+#status_button .btn:hover {
+  background-color:rgb(106, 0, 205);
+}

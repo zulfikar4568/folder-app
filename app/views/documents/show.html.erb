@@ -1,0 +1,26 @@
+<div class="mt-4">
+    <div class="row ml-3 mr-3">
+        <div class="col-sm-4">
+            <div class="card p-3">
+                <h4 class="text-center">Folder Information</h4>
+                <hr>
+                <p>Owner                : Admin</p>
+                <p>Name Document        : <b><%= @document.name%></b></p>
+                <p>Created              : <%= @document.created_at.strftime("%d/%m/%Y %H:%M")%></p>
+            </div>
+        </div>
+        <div class="col-sm-8">
+        <b class="h4"><%= @document.name %></b>
+            <hr>
+            <div id="status_button" class="text-center">
+                <button class="btn mt-1"><%= link_to "", documents_download_path, class: "fa fa-download"%></button>
+                <h4 class="mt-3">Click to download</h4>
+            </div>
+        </div>
+        <%# <div class="col-sm-4"> %>
+        <%# <b class="h4">Status</b>
+            <hr>
+            
+        </div> %>
+    </div>
+</div>

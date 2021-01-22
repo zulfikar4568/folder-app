@@ -1,5 +1,5 @@
 class DocumentsController < ApplicationController
-    before_action :set_document, only: [:destroy, :edit, :update]
+    before_action :set_document, only: [:destroy, :edit, :update, :show]
 
     def index
         
@@ -9,6 +9,11 @@ class DocumentsController < ApplicationController
         @document = Document.new
     end
 
+    def download
+        @document = Document.find($id_doc)
+        file_path = ENV['APP_FOLDER'] + "/work-folder" + $global_path
+        send_file(File.join(file_path, @document.name))
+    end
 
     def create
         if Document.where(name: document_params[:file].original_filename).length > 0
@@ -30,11 +35,14 @@ class DocumentsController < ApplicationController
         redirect_to folders_path
     end
 
+    def show
+        $id_doc = @document.id
+    end
+
 
     def edit
         
-        # file_path = ENV['APP_FOLDER'] + "/work-folder" + $global_path
-        # send_file(File.join(file_path, "Documentation Make an Application using Ruby.odt"))
+        
     end
 
     def update
