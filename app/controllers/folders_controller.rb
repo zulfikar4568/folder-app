@@ -14,9 +14,9 @@ class FoldersController < ApplicationController
 
     def create
         @param_name = folder_params[:name] 
-        Dir.chdir(ENV['APP_FOLDER'] + "/work-folder" + $global_path) # Pindah folder ke folder ini
+        Dir.chdir("#{ENV['APP_FOLDER']}/work-folder#{$global_path}") # Pindah folder ke folder ini
         if Dir.exist?(@param_name) #Jika file sudah ada maka ganti nama file
-            @param_name = @param_name + "_copy"
+            @param_name = "#{@param_name}_copy"
         end
 
         @folder = Folder.new(folder_params.merge(name: @param_name, path: $global_path, parent_id: $parent_id))
@@ -34,7 +34,7 @@ class FoldersController < ApplicationController
     end
 
     def update
-        Dir.chdir(ENV['APP_FOLDER'] + "/work-folder" + @folder.path)
+        Dir.chdir("#{ENV['APP_FOLDER']}/work-folder#{@folder.path}")
         File.rename @folder.name, folder_params[:name]
         if @folder.update(folder_params)
             redirect_to folders_path
@@ -47,7 +47,7 @@ class FoldersController < ApplicationController
         @folders = Folder.all
         $global_path = @folder.path + @folder.name + "/" # Posisi Folder saat ini
         $parent_id = @folder.id # Id parent di isi dengan id yang sedang di lihat
-        @content_folders = (Dir.each_child(ENV['APP_FOLDER'] + "/work-folder" + $global_path))
+        @content_folders = (Dir.each_child("#{ENV['APP_FOLDER']}/work-folder#{$global_path}"))
     end
 
     def children_destroy(idd_parent)
@@ -64,7 +64,7 @@ class FoldersController < ApplicationController
     def destroy
         @folder.destroy
         children_destroy(params[:id])
-        Dir.chdir(ENV['APP_FOLDER'] + "/work-folder" + @folder.path)
+        Dir.chdir("#{ENV['APP_FOLDER']}/work-folder#{@folder.path}")
         FileUtils.rm_rf(@folder.name)
         redirect_to folders_path
     end
