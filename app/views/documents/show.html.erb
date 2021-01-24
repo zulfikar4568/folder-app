@@ -1,3 +1,20 @@
+<div class="row ml-3 mr-3">
+    <div class="col-sm-12 card-header mt-4 p-2">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <%= link_to "Root Folder", folders_path, class:"navbar-brand ml-4"%>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Tools" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="Tools">
+            <span class="navbar-text">
+                <a class="nav-item ml-4"><%= link_to "Edit Files", edit_document_path(@document.id) %></a>
+                <a class="nav-item ml-4"><%= link_to "Remove Files", document_path(@document.id), {method: :delete, data: { confirm: "Are you sure?"}}%></a>    
+            </span>
+            </div>
+        </nav>
+    </div>
+</div>
+
 <div class="mt-4">
     <div class="row ml-3 mr-3">
         <div class="col-sm-4">
@@ -7,6 +24,9 @@
                 <p>Owner                : Admin</p>
                 <p>Name Document        : <b><%= @document.name%></b></p>
                 <p>Created              : <%= @document.created_at.strftime("%d/%m/%Y %H:%M")%></p>
+                <p>Used disk space      : <%= @size%> KB</p>
+                <!--=<p>Modify               : <%= @modify.strftime("%d/%m/%Y %H:%M")%></p>
+                <p>Last Access          : <%= @access.strftime("%d/%m/%Y %H:%M")%></p>-->
             </div>
         </div>
         <div class="col-sm-8">

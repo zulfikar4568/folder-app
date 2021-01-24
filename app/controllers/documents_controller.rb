@@ -17,27 +17,56 @@ class DocumentsController < ApplicationController
     end
 
     def create
-        if Document.where(name: document_params[:file].original_filename).length > 0
-            document_params[:file].original_filename = "copy_#{document_params[:file].original_filename}"
-        end
-        @document = Document.new(document_params.merge(name: document_params[:file].original_filename, folder_id: $parent_id, description: document_params[:description]))
+        puts document_params[:files]
 
-        if @document.save
-            redirect_to folders_path
-        else
-            render :new
+        document_params[:files].each do |file|
+            filename = file.original_filename
+            Dir.chdir("#{ENV['APP_FOLDER']}#{$global_path}")
+
+            if(File.exist?(filename))
+                filename = "copy_" + filename
+            end
+
+            Dir.chdir("#{ENV['APP_FOLDER']}#{$global_path}")
+            f = File.open filename, "wb"
+            f.write file.read()
+            f.close
+
+            if Document.where(name: file.original_filename).length > 0
+                file.original_filename = "copy_#{file.original_filename}"
+            end
+            @document = Document.new(name: file.original_filename, folder_id: $parent_id, description: document_params[:description])
+            @document.save
         end
+        
+        redirect_to folders_path
+
+        #!-----------------------------------------------PROGRAM DI BAWAH UNTUK UPLOAD SINGLE FILES----------------
+        # if Document.where(name: document_params[:file].original_filename).length > 0
+        #     document_params[:file].original_filename = "copy_#{document_params[:file].original_filename}"
+        # end
+        # @document = Document.new(document_params.merge(name: document_params[:file].original_filename, folder_id: $parent_id, description: document_params[:description]))
+
+        # if @document.save
+        #     redirect_to folders_path
+        # else
+        #     render :new
+        # end
     end
 
     def destroy
         @document.destroy
         Dir.chdir("#{ENV['APP_FOLDER']}#{$global_path}")
         FileUtils.rm_rf(@document.name)
-        redirect_to folders_path
+        redirect_to folder_path($parent_id)
     end
 
     def show
         $id_doc = @document.id
+        Dir.chdir("#{ENV['APP_FOLDER']}#{$global_path}")
+        @modify = File.mtime(@document.name)
+        @access = File.atime(@document.name)
+        @size = (File.size(@document.name) / 1000.0)
     end
 
 
@@ -63,7 +92,7 @@ class DocumentsController < ApplicationController
     end
 
     def document_params
-        params.require(:document).permit(:description, :file)
+        params.require(:document).permit(:description, {files: []})
     end
 
     def update_params
