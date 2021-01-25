@@ -7,8 +7,12 @@
             </button>
             <div class="collapse navbar-collapse" id="Tools">
             <span class="navbar-text">
-                <a class="nav-item ml-4"><%= link_to "Edit Files", edit_document_path(@document.id) %></a>
-                <a class="nav-item ml-4"><%= link_to "Remove Files", document_path(@document.id), {method: :delete, data: { confirm: "Are you sure?"}}%></a>    
+                <%if (can? :update, Document) && ((@document.folder.account.id == current_account.id) || @current_account&.admin?)%>
+                    <a class="nav-item ml-4"><%= link_to "Edit Files", edit_document_path(@document.id) %></a>
+                <%end%>
+                <%if (can? :destroy, Document) && ((@document.folder.account.id == current_account.id) || @current_account&.admin?)%>
+                    <a class="nav-item ml-4"><%= link_to "Remove Files", document_path(@document.id), {method: :delete, data: { confirm: "Are you sure?"}}%></a>    
+                <%end%>
             </span>
             </div>
         </nav>
@@ -21,12 +25,14 @@
             <div class="card p-3">
                 <h4 class="text-center">File Information</h4>
                 <hr>
-                <p>Owner                : Admin</p>
+                <p>Owner                : <%= @document.folder.account.full_name%></p>
                 <p>Name Document        : <b><%= @document.name%></b></p>
                 <p>Created              : <%= @document.created_at.strftime("%d/%m/%Y %H:%M")%></p>
                 <p>Used disk space      : <%= @size%> KB</p>
                 <!--=<p>Modify               : <%= @modify.strftime("%d/%m/%Y %H:%M")%></p>
                 <p>Last Access          : <%= @access.strftime("%d/%m/%Y %H:%M")%></p>-->
+                <p>Content-type         : <%= @document.content%></p>
+                <p>Version              : <%= @document.version%></p>
             </div>
         </div>
         <div class="col-sm-8">

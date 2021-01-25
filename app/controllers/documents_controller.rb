@@ -20,23 +20,25 @@ class DocumentsController < ApplicationController
         puts document_params[:files]
 
         document_params[:files].each do |file|
-            filename = file.original_filename
-            Dir.chdir("#{ENV['APP_FOLDER']}#{$global_path}")
+            @document = Document.new(name: file.original_filename, folder_id: $parent_id, description: document_params[:description], version: "1.0",  content: file.content_type)
+            if @document.save
+                filename = file.original_filename
+                Dir.chdir("#{ENV['APP_FOLDER']}#{$global_path}")
 
-            if(File.exist?(filename))
-                filename = "copy_" + filename
+                if(File.exist?(filename))
+                    filename = "copy_" + filename
+                end
+
+                Dir.chdir("#{ENV['APP_FOLDER']}#{$global_path}")
+                f = File.open filename, "wb"
+                f.write file.read()
+                f.close
+
+                if Document.where(name: file.original_filename).length > 0
+                    file.original_filename = "copy_#{file.original_filename}"
+                end
             end
-
-            Dir.chdir("#{ENV['APP_FOLDER']}#{$global_path}")
-            f = File.open filename, "wb"
-            f.write file.read()
-            f.close
-
-            if Document.where(name: file.original_filename).length > 0
-                file.original_filename = "copy_#{file.original_filename}"
-            end
-            @document = Document.new(name: file.original_filename, folder_id: $parent_id, description: document_params[:description])
-            @document.save
+           
         end
         
         redirect_to folders_path

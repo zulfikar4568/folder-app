@@ -1,3 +1,5 @@
 class Folder < ApplicationRecord
-    has_many :documents, dependent: :destroy
+  belongs_to :account
+
+  has_many :documents, dependent: :destroy
 end

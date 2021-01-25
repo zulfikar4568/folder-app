@@ -1,0 +1,33 @@
+<%= form_for @account do |form|%>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <%= label_tag :first_name %><br />
+                <%= form.text_field :first_name, class: "form-control" %>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                <%= label_tag :last_name %><br />
+                <%= form.text_field :last_name, class: "form-control" %>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <%= label_tag :username %>
+        <%= form.text_field :username, class: "form-control" %>
+    </div>  
+
+    <div class="form-group">
+        <%= label_tag :email%>
+        <%= form.text_field :email, class: "form-control"%>
+    </div>
+
+    <div class="form-group">
+        <%= label_tag :role_id %>
+        <%= form.select :role_id, [["Guest", 1], ["User", 2], ["Admin", 3]], {}, {class: "custom-select"}%>
+    </div>
+
+    <%= form.submit "Changes" ,class: "btn btn-primary"%>
+<%end%>

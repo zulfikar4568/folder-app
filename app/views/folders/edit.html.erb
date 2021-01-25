@@ -7,7 +7,6 @@
             </button>
             <div class="collapse navbar-collapse" id="Tools">
             <span class="navbar-text">
-                <a class="nav-item ml-4"><%= link_to "Edit Folder", edit_folder_path($parent_id)%></a>
             </span>
             </div>
         </nav>
@@ -19,8 +18,11 @@
         <div class="col-sm-12">
             <h3>Edit Folder</h3>
             <hr>
-
-            <%= render partial: "form_edit"%>
+            <%if (can? :update, Folder) && (($akun_id == current_account.id) || @current_account&.admin?)%>
+                <%= render partial: "form_edit" %>
+            <%else%>
+                <h3>Maaf Anda belum bisa mengakses halaman ini</h3>
+            <%end%>
         </div>
     </div>
 </div>

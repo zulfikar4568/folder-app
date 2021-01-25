@@ -7,7 +7,6 @@
             </button>
             <div class="collapse navbar-collapse" id="Tools">
             <span class="navbar-text">
-                <a class="nav-item ml-4"><%= link_to "Add Sub Folder", new_folder_path %></a>
             </span>
             </div>
         </nav>
@@ -21,8 +20,11 @@
             <p class="card-text">Current Folder: <%= $global_path%></p> 
             <h3>Add Sub Folder</h3>
             <hr>
-
-            <%= render partial: "form_new" %>
+            <%if (can? :create, Folder) && (($akun_id == current_account.id) || @current_account&.admin?)%>
+                <%= render partial: "form_new" %>
+            <%else%>
+                <h3>Maaf Anda belum bisa mengakses halaman ini</h3>
+            <%end%>
         </div>
     </div>
 </div>

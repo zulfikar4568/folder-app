@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-sm-7">
+            <p class="h4"><%= @profile.full_name%></p>
+            <small><p class="mb-0">Username: <%= @profile.username%></p></small>
+            <small><p>Role: <%= @profile.role.name%></p></small>
+            <p style="text-align: justify;"><%= @profile.full_name%> adalah seorang fisikawan, matematikawan, ahli astronomi, filsuf alam, alkimiawan, dan teolog yang berasal dari Inggris. Dia merupakan pengikut aliran heliosentris dan ilmuwan yang sangat berpengaruh sepanjang sejarah, bahkan dikatakan sebagai bapak ilmu fisika klasik.</p>
+            <p>Has been created: <%= @profile.created_at.strftime("%d/%m/%Y")%></p>
+        </div>
+        <div class="col-sm-5">
+            <%= image_tag "profile.svg", class: "img-fluid"%>
+        </div>
+    </div>
+</div>

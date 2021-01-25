@@ -2,12 +2,8 @@
 
 one:
   name: MyString
-  path: MyString
-  parent_id: 
-  account: one
+  description: MyString
 
 two:
   name: MyString
-  path: MyString
-  parent_id: 
-  account: two
+  description: MyString
