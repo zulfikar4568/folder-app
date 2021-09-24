@@ -37,3 +37,6 @@
 yarn-debug.log*
 .yarn-integrity
 .env
+.env.prod
+.env.dev
+work-folder/*

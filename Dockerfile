@@ -5,13 +5,15 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources
 RUN apt-get update -qq && apt-get install -y nodejs postgresql-client yarn
 
 WORKDIR /folder-app
-COPY . ./
+# For deployment to Heruku
+# COPY . ./ 
 
+#For Local Development
 COPY Gemfile Gemfile.lock package.json yarn.lock ./
 RUN bundle update mimemagic && bundle install --verbose --jobs 20 --retry 5 && \
     yarn install --check-files
 RUN yarn install
-RUN yarn add bootstrap jquery popper.js
+RUN yarn add bootstrap jquery @popperjs/core
 
 
 COPY entrypoint.sh /usr/bin/
