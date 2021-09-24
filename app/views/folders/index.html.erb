@@ -7,7 +7,9 @@
             </button>
             <div class="collapse navbar-collapse" id="Tools">
             <span class="navbar-text">
+            <%if (can? :create, Folder) %>
                 <a class="nav-item ml-4"><%= link_to "Add Folder", new_folder_path %></a>
+            <%end%>
             </span>
             </div>
         </nav>

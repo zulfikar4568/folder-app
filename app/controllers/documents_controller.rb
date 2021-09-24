@@ -11,7 +11,7 @@ class DocumentsController < ApplicationController
 
     def download
         @document = Document.find($id_doc)
-        file_path = "#{ENV['APP_FOLDER']}#{$global_path}"
+        file_path = "#{Rails.root}/work-folder#{$global_path}"
         send_file(File.join(file_path, @document.name))
         # redirect_to document_path($id_doc)
     end
@@ -23,13 +23,13 @@ class DocumentsController < ApplicationController
             @document = Document.new(name: file.original_filename, folder_id: $parent_id, description: document_params[:description], version: "1.0",  content: file.content_type)
             if @document.save
                 filename = file.original_filename
-                Dir.chdir("#{ENV['APP_FOLDER']}#{$global_path}")
+                Dir.chdir("#{Rails.root}/work-folder#{$global_path}")
 
                 if(File.exist?(filename))
                     filename = "copy_" + filename
                 end
 
-                Dir.chdir("#{ENV['APP_FOLDER']}#{$global_path}")
+                Dir.chdir("#{Rails.root}/work-folder#{$global_path}")
                 f = File.open filename, "wb"
                 f.write file.read()
                 f.close
@@ -58,14 +58,14 @@ class DocumentsController < ApplicationController
 
     def destroy
         @document.destroy
-        Dir.chdir("#{ENV['APP_FOLDER']}#{$global_path}")
+        Dir.chdir("#{Rails.root}/work-folder/#{$global_path}")
         FileUtils.rm_rf(@document.name)
         redirect_to folder_path($parent_id)
     end
 
     def show
         $id_doc = @document.id
-        Dir.chdir("#{ENV['APP_FOLDER']}#{$global_path}")
+        Dir.chdir("#{Rails.root}/work-folder/#{$global_path}")
         @modify = File.mtime(@document.name)
         @access = File.atime(@document.name)
         @size = (File.size(@document.name) / 1000.0)
@@ -78,7 +78,7 @@ class DocumentsController < ApplicationController
     end
 
     def update
-        Dir.chdir("#{ENV['APP_FOLDER']}#{@document.folder.path}#{@document.folder.name}")
+        Dir.chdir("#{Rails.root}/work-folder/#{@document.folder.path}#{@document.folder.name}")
         File.rename @document.name, update_params[:name]
         if @document.update(update_params)
             redirect_to folders_path

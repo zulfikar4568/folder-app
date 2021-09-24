@@ -11,7 +11,7 @@
                 <%#= form.collection_select(:parent_id, Folder.order(:name), :id, :name, {include_blank: true}, {class: "custom-select"}) %>
                 <%#= label_tag :path %>
                 <%#  listFolder = []
-                    Dir.chdir(ENV['APP_FOLDER'] + "/work-folder" + $global_path) do
+                    Dir.chdir(Rails.root + "/work-folder" + $global_path) do
                        listFolder = Dir.glob('*')
                         listFolder.insert(0, "")
                     end %>

@@ -1,24 +1,31 @@
-# README
+## Build Application
+```
+sudo docker-compose build
+sudo docker-compose up
+```
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Open second terminal and Migrate your database
+```
+sudo docker exec -t -i folder-app_web_1 /bin/sh
+rails db:create
+rails db:migrate
 
-Things you may want to cover:
+or
 
-* Ruby version
+docker-compose run web rails db:create
+docker-compose run web rails db:migrate
+```
 
-* System dependencies
+## Create Role
+```
+docker-compose run web rails db:seed
+```
+## Sign up
+When you sign up default role is Guest, so for initialize you can change first account to Admin role.
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Change Role to Admin
+```
+rails c
+Account.all
+Account.find_by(id: 2).update(role_id: 6)
+```
